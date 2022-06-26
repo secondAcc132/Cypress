@@ -14,7 +14,9 @@ stages {
   }
 
   stage('Build and test') {
-   sh "npm run build:and:test"
+    steps {
+      sh "npm run build:and:test"
+    }
   }
 }
 
