@@ -6,8 +6,8 @@ pipeline {
   }
  }
 
-stage {
- stages('Download the dependencies') {
+stages {
+ stage('Download the dependencies') {
   steps {
    sh "npm install"
   }
