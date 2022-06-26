@@ -1,0 +1,41 @@
+/// <reference types="Cypress" />
+
+    beforeEach(() => {
+        cy.fixture('example.json').as('example')
+    })
+    
+    it("Login in the test site ", function() {
+        cy.visit('https://testing-wp-qa-tech-interview-2022-06-09-c2882b.otgs.work/javed/wp-login.php')
+        cy.title().should('include', 'Log In')
+        cy.get('#user_login').click().type('javed')
+        cy.get('#user_pass').click().type('KC#n@ekeZym*&lhprnNmz&nn', { log: false })
+        cy.get('#wp-submit').click()
+        cy.visit('https://testing-wp-qa-tech-interview-2022-06-09-c2882b.otgs.work/javed/')
+        cy.title().should('include', 'Just another QA')
+        Cypress.Cookies.defaults({
+            preserve: /wordpress_|wordpress_logged_in_/,
+        })
+    })
+
+    it("Create new pages ", function () {
+        const pageData = this.example.pages
+        pageData.forEach(page => {
+            cy.get('li#wp-admin-bar-new-content.menupop').rightclick()
+            cy.contains('Page').click()
+            cy.title().should('include', 'Add New Page ‹ ')
+            cy.get('body').trigger('keydown', { keyCode: 27})
+            cy.get('.editor-post-title').type(page.title)
+            cy.get('p[aria-label="Add default block"]').type(page.content1)
+            cy.contains(page.content1).type('{enter}')
+            cy.get('[data-empty="true"]').rightclick()
+            cy.get('button.block-editor-inserter__toggle').click()
+            cy.contains('Quote').click()
+            cy.get('[aria-label="Quote text"]').type(page.content2)
+            cy.get('button.editor-post-publish-button__button').click()
+            cy.get('button.editor-post-publish-button.editor-post-publish-button__button').click()
+            cy.contains('View Page').click()
+            cy.get('.wp-block-post-title').should('be.visible').should('have.text',page.title)
+            cy.get('.wp-block-post-content').should('be.visible').should('include.text',page.content1)
+            .and('include.text',page.content2)
+        })
+    })
