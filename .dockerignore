@@ -2,3 +2,4 @@ node_modules
 README.md
 .gitattributes
 .gitignore
+jenkins.war
