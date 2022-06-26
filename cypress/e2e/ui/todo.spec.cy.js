@@ -8,7 +8,7 @@ describe('Todo testing', ()=>{
 
     it.only('should add a new todo correctly', ()=>{
         cy.intercept('POST','http://localhost:8080/todos').as('postRequest')
-        cy.addNewToDo("First Todo")
+        cy.addNewToDo("The First Todo")
         cy.wait('@postRequest').then(xhr => {
             expect(xhr.request.body.name).to.eql("The First Todo")
         })
