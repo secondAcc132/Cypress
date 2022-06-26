@@ -16,7 +16,7 @@ describe('Todo testing', ()=>{
     })
 
     it('should be able to toggle the status of a todo correctly', ()=>{
-        cy.addNewToDo("Second Todo")
+        cy.addNewToDo("The Second Todo")
         cy.get('.todo-checkbox').check().should('be.checked')
         cy.get('.todo-checkbox').uncheck().should('not.be.checked')
     })
