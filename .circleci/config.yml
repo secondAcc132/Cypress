@@ -6,4 +6,4 @@ workflows:
     jobs:
       - cypress/run:
           command: npm install -g node-gyp
-          command: npm run build:and:test
+                   npm run build:and:test
